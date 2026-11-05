@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Каталог станков - демо сайта на Tilda</title>
+<meta name="description" content="Демонстрационный макет каталога производителя станков">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Hallmark · macrostructure: Workbench (каталог-стол) · tone: utilitarian · theme: custom "цех" (paper oklch 93% 0.008 90, accent oklch 58% 0.17 45 тёплый, display Oswald + body Golos Text) · nav N1b · footer Ft1 · enrichment: none (чертёж-заглушка, Tier B SVG) */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 */
+:root{
+  --bg:#ECEAE4; --paper:#F7F6F2; --ink:#1A1D21; --steel:#3B434C; --line:#C9C6BD;
+  --accent:#D2501B; --accent-d:#A93D12; --ph:#8F7212;
+  --head:'Oswald','Arial Narrow',sans-serif; --body:'Golos Text',system-ui,sans-serif;
+  --pad:max(16px,env(safe-area-inset-left));
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 var(--body);-webkit-text-size-adjust:100%}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left)) 0 max(16px,env(safe-area-inset-right))}
+.ph{color:var(--ph);font-weight:500}
+h1,h2,h3{font-family:var(--head);text-transform:uppercase;letter-spacing:.01em;line-height:1.05;margin:0}
+h2{font-size:clamp(30px,5vw,48px);margin-bottom:28px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.btn{display:inline-block;border:0;cursor:pointer;background:var(--accent);color:#fff;font:600 16px/1 var(--body);padding:16px 26px;border-radius:2px;text-decoration:none;transition:background .15s}
+.btn:hover{background:var(--accent-d)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:#fff}
+
+header{position:sticky;top:0;z-index:20;background:rgba(236,234,228,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+.logo{font:700 22px var(--head);text-transform:uppercase;text-decoration:none;letter-spacing:.03em}
+.logo i{display:inline-block;width:12px;height:12px;background:var(--accent);margin-right:8px}
+nav{display:flex;gap:22px;font-size:15px}
+nav a{text-decoration:none}
+nav a:hover{color:var(--accent)}
+.bar .btn{padding:12px 18px;font-size:14px}
+@media(max-width:820px){nav{display:none}}
+
+.hero{padding:56px 0 48px;border-bottom:1px solid var(--line);min-height:min(78dvh,720px);display:flex;align-items:center}
+.hero .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(40px,8vw,88px);font-weight:700}
+.hero h1 span{color:var(--accent)}
+.hero p{max-width:520px;margin:22px 0 30px;color:var(--steel);font-size:19px}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+.blueprint{aspect-ratio:1/1;border:2px solid var(--ink);background:
+  linear-gradient(var(--line) 1px,transparent 1px) 0 0/32px 32px,
+  linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/32px 32px,var(--paper);
+  display:grid;place-items:center;position:relative}
+.blueprint svg{width:78%;height:auto}
+.blueprint small{position:absolute;left:14px;bottom:10px;font-size:13px}
+@media(max-width:820px){.hero .grid{grid-template-columns:1fr}.blueprint{aspect-ratio:4/3}}
+
+.facts{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line)}
+.facts div{padding:26px 16px 26px 0}
+.facts b{display:block;font:700 40px var(--head)}
+.facts span{font-size:15px;color:var(--steel)}
+@media(max-width:620px){.facts{grid-template-columns:1fr}.facts div{padding:14px 0}}
+
+section{padding:64px 0}
+.cat-tools{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px;align-items:center}
+.chip{border:1.5px solid var(--ink);background:transparent;padding:9px 16px;font:500 15px var(--body);cursor:pointer;border-radius:2px}
+.chip[aria-pressed="true"]{background:var(--ink);color:#fff}
+.search{margin-left:auto;min-width:200px;flex:0 1 280px;border:1.5px solid var(--line);background:var(--paper);padding:10px 14px;font:400 15px var(--body);border-radius:2px}
+@media(max-width:620px){.search{margin-left:0;flex-basis:100%}}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.card{background:var(--paper);border:1px solid var(--line);display:flex;flex-direction:column;text-align:left;font:inherit;color:inherit;padding:0;cursor:pointer;transition:border-color .15s,transform .15s}
+.card:hover{border-color:var(--ink);transform:translateY(-3px)}
+.photo{aspect-ratio:4/3;background:repeating-linear-gradient(135deg,#E4E1D8 0 10px,#DAD7CD 10px 20px);display:grid;place-items:center;color:var(--steel);font-size:14px;border-bottom:1px solid var(--line)}
+.card .in{padding:16px 18px 20px}
+.card h3{font-size:22px;margin-bottom:8px}
+.card dl{margin:0;font-size:14px;color:var(--steel)}
+.card dl div{display:flex;justify-content:space-between;gap:10px;border-top:1px dashed var(--line);padding:6px 0}
+.card dd{margin:0;text-align:right}
+.card .go{display:block;margin-top:12px;color:var(--accent);font-weight:600;font-size:15px}
+.empty{padding:30px 0;color:var(--steel)}
+.more{margin-top:26px;color:var(--steel)}
+
+.why{background:var(--ink);color:#EDEBE5}
+.why h2{color:#fff}
+.why .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px}
+.why h3{font-size:22px;color:var(--accent);margin-bottom:8px}
+.why p{margin:0;color:#B9BEC4}
+.why .ph{color:#E0B53B}
+
+.promo{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.promo div{border:2px solid var(--ink);padding:24px;background:var(--paper)}
+.promo b{font:700 28px var(--head);text-transform:uppercase;display:block;margin-bottom:6px}
+
+.about .grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.about p{margin:0 0 14px;color:var(--steel)}
+@media(max-width:820px){.about .grid{grid-template-columns:1fr}}
+
+.lead{background:var(--accent);color:#fff}
+.lead h2{color:#fff}
+.lead .grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.lead p{margin:0;font-size:19px}
+form{background:var(--paper);color:var(--ink);padding:26px;display:grid;gap:14px}
+label{font-size:14px;font-weight:500;display:grid;gap:6px}
+input[type=text],input[type=tel],select,textarea{width:100%;border:1.5px solid var(--line);background:#fff;padding:13px 14px;font:400 16px var(--body);border-radius:2px}
+textarea{min-height:84px;resize:vertical}
+.agree{display:flex;gap:10px;align-items:flex-start;font-size:13px;font-weight:400;line-height:1.4;color:var(--steel)}
+.agree input{margin-top:3px;width:20px;height:20px;flex:none;accent-color:var(--accent)}
+form .btn:disabled{background:#B9B5AA;cursor:not-allowed}
+.ok{display:none;background:#fff;border-left:5px solid var(--accent);padding:14px 16px;color:var(--ink)}
+@media(max-width:820px){.lead .grid{grid-template-columns:1fr}}
+
+footer{background:var(--ink);color:#9BA1A8;padding:34px 0 calc(34px + env(safe-area-inset-bottom));font-size:14px}
+footer .wrap{display:grid;gap:8px}
+footer .ph{color:#E0B53B}
+
+dialog{border:0;padding:0;max-width:760px;width:calc(100% - 24px);background:var(--paper);color:var(--ink)}
+dialog::backdrop{background:rgba(20,22,25,.6)}
+.dlg{padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.dlg h3{font-size:30px;margin-bottom:10px}
+.dlg table{width:100%;border-collapse:collapse;font-size:15px;margin:12px 0 18px}
+.dlg td{border-top:1px solid var(--line);padding:8px 0}
+.dlg td:last-child{text-align:right}
+.x{position:absolute;right:10px;top:8px;background:none;border:0;font-size:30px;cursor:pointer;line-height:1}
+@media(max-width:620px){.dlg{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap bar">
+  <a class="logo" href="#top"><i></i><span class="ph">Название компании</span></a>
+  <nav><a href="#catalog">Каталог</a><a href="#why">Почему мы</a><a href="#promo">Акции</a><a href="#about">О компании</a></nav>
+  <a class="btn" href="#lead">Оставить заявку</a>
+</div></header>
+
+<main id="top">
+<div class="hero"><div class="wrap grid">
+  <div>
+    <h1>Станки, которые <span>работают</span> в цеху, а не стоят в каталоге</h1>
+    <p>Производим станки собственной разработки. В каталоге <span class="ph">&lt;&lt;запросить у заказчика: сколько позиций&gt;&gt;</span> моделей с фото, описанием и техническими характеристиками.</p>
+    <div class="cta"><a class="btn" href="#catalog">Смотреть каталог</a><a class="btn ghost" href="#lead">Получить расчёт</a></div>
+  </div>
+  <div class="blueprint" role="img" aria-label="Схематичный чертёж станка">
+    <svg viewBox="0 0 300 220" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" style="color:var(--ink)">
+      <rect x="20" y="170" width="260" height="22"/>
+      <rect x="34" y="112" width="70" height="58" style="fill:var(--paper)"/>
+      <rect x="104" y="128" width="96" height="14"/>
+      <circle cx="69" cy="141" r="16" style="stroke:var(--accent)"/>
+      <rect x="214" y="96" width="50" height="74" style="fill:var(--paper)"/>
+      <path d="M200 135h14M239 96V60h-48l-12 12" />
+      <path d="M20 205h260M20 200v10M280 200v10" stroke-width="1.5"/>
+    </svg>
+    <small class="ph">чертёж-заглушка, здесь будет фото цеха</small>
+  </div>
+</div></div>
+
+<div class="wrap facts">
+  <div><b class="ph">&lt;&lt;N&gt;&gt;</b><span>моделей в каталоге</span></div>
+  <div><b class="ph">&lt;&lt;N&gt;&gt;</b><span>лет на рынке</span></div>
+  <div><b class="ph">&lt;&lt;N&gt;&gt;</b><span>месяцев гарантия</span></div>
+</div>
+
+<section id="catalog"><div class="wrap">
+  <h2>Каталог станков</h2>
+  <div class="cat-tools">
+    <div id="chips" style="display:contents"></div>
+    <input class="search" id="q" type="search" placeholder="Найти станок" aria-label="Поиск по каталогу">
+  </div>
+  <div class="cards" id="cards"></div>
+  <p class="empty" id="empty" hidden>Ничего не найдено. Сбросьте фильтр или оставьте заявку, подберём станок под вашу задачу.</p>
+  <p class="more">Показано 8 карточек из <span class="ph">&lt;&lt;N&gt;&gt;</span>. Остальные модели добавим по вашей таблице: у каждой будет такая же карточка с фото и характеристиками.</p>
+</div></section>
+
+<section class="why" id="why"><div class="wrap">
+  <h2>Почему заказывают у нас</h2>
+  <div class="grid">
+    <div><h3>Своё производство</h3><p>Станки собираем сами, <span class="ph">&lt;&lt;запросить у заказчика: где находится производство&gt;&gt;</span>.</p></div>
+    <div><h3>Гарантия и сервис</h3><p>Гарантия <span class="ph">&lt;&lt;срок&gt;&gt;</span>, запчасти и обслуживание <span class="ph">&lt;&lt;условия&gt;&gt;</span>.</p></div>
+    <div><h3>Доставка</h3><p>Доставляем <span class="ph">&lt;&lt;регионы и сроки&gt;&gt;</span>, помогаем с пусконаладкой.</p></div>
+  </div>
+</div></section>
+
+<section id="promo"><div class="wrap">
+  <h2>Акции</h2>
+  <div class="promo">
+    <div><b class="ph">&lt;&lt;Название акции&gt;&gt;</b>Условия и срок: <span class="ph">&lt;&lt;запросить у заказчика&gt;&gt;</span></div>
+    <div><b class="ph">&lt;&lt;Название акции&gt;&gt;</b>Условия и срок: <span class="ph">&lt;&lt;запросить у заказчика&gt;&gt;</span></div>
+  </div>
+</div></section>
+
+<section class="about" id="about"><div class="wrap">
+  <h2>О компании</h2>
+  <div class="grid">
+    <div><p>Расскажем, кто мы и что делаем: история производства, цех, команда. <span class="ph">&lt;&lt;запросить у заказчика: текст о компании, фото цеха&gt;&gt;</span></p></div>
+    <div><p>Реквизиты и контакты: <span class="ph">&lt;&lt;адрес, телефон, почта, часы работы&gt;&gt;</span></p></div>
+  </div>
+</div></section>
+
+<section class="lead" id="lead"><div class="wrap grid">
+  <div><h2>Подберём станок под вашу задачу</h2><p>Оставьте заявку: расскажите, что нужно обрабатывать, и мы пришлём подходящие модели и стоимость.</p></div>
+  <form id="f" novalidate>
+    <label>Имя<input type="text" name="name" autocomplete="name" required></label>
+    <label>Телефон<input type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="+7" required></label>
+    <label>Что вас интересует<select name="cat" id="catSel"></select></label>
+    <label>Комментарий<textarea name="msg" placeholder="Материал, размеры, объёмы"></textarea></label>
+    <label class="agree"><input type="checkbox" id="agree">Я даю согласие на обработку персональных данных и ознакомлен с <a href="#" onclick="return false">политикой обработки данных</a>. <span class="ph">&lt;&lt;запросить у заказчика: оператор, реквизиты, текст политики&gt;&gt;</span></label>
+    <button class="btn" id="send" disabled>Отправить заявку</button>
+    <div class="ok" id="ok" role="status">Демо: в рабочем сайте заявка уйдёт вам в Telegram или на почту.</div>
+  </form>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <div><span class="ph">&lt;&lt;Название компании, ИНН, ОГРН&gt;&gt;</span></div>
+  <div>Демонстрационный макет, не является официальным сайтом организации.</div>
+</div></footer>
+
+<dialog id="dlg"><button class="x" id="close" aria-label="Закрыть">&times;</button>
+  <div class="dlg">
+    <div class="photo" style="aspect-ratio:4/3;border:1px solid var(--line)">фото станка</div>
+    <div>
+      <h3 id="dT"></h3>
+      <div class="ph" style="font-size:14px">&lt;&lt;запросить у заказчика: описание модели&gt;&gt;</div>
+      <table id="dTab"></table>
+      <a class="btn" href="#lead" id="dGo">Оставить заявку</a>
+    </div>
+  </div>
+</dialog>
+
+<script>
+(function(){
+  var cats=["Токарные","Фрезерные","Сверлильные","Шлифовальные","Листогибочные","Пилы ленточные"];
+  var specs=["Мощность","Размер стола","Масса","Цена"];
+  var items=[];
+  cats.forEach(function(c){items.push({c:c,n:c+" станок"})});
+  items.splice(6);
+  items.push({c:"Токарные",n:"Токарный станок, вторая модель"});
+  items.push({c:"Фрезерные",n:"Фрезерный станок, вторая модель"});
+  var cur="Все",box=document.getElementById("cards"),chips=document.getElementById("chips"),
+      q=document.getElementById("q"),empty=document.getElementById("empty"),
+      PH='<span class="ph">&lt;&lt;запросить&gt;&gt;</span>';
+  function draw(){
+    var t=q.value.trim().toLowerCase(),html="";
+    items.forEach(function(it,i){
+      if(cur!=="Все"&&it.c!==cur)return;
+      if(t&&(it.n+" "+it.c).toLowerCase().indexOf(t)<0)return;
+      html+='<button class="card" data-i="'+i+'"><div class="photo">фото станка</div><div class="in"><h3>'+it.n+'</h3><dl>'+
+        specs.slice(0,3).map(function(s){return'<div><dt>'+s+'</dt><dd>'+PH+'</dd></div>'}).join("")+
+        '</dl><span class="go">Характеристики и заявка</span></div></button>';
+    });
+    box.innerHTML=html;empty.hidden=!!html;
+  }
+  ["Все"].concat(cats).forEach(function(c){
+    var b=document.createElement("button");b.className="chip";b.textContent=c;
+    b.setAttribute("aria-pressed",c==="Все");
+    b.onclick=function(){cur=c;[].forEach.call(chips.children,function(x){x.setAttribute("aria-pressed",x===b)});draw()};
+    chips.appendChild(b);
+  });
+  q.addEventListener("input",draw);draw();
+  var sel=document.getElementById("catSel");
+  ["Не знаю, нужна консультация"].concat(cats).forEach(function(c){var o=document.createElement("option");o.textContent=c;sel.appendChild(o)});
+  var d=document.getElementById("dlg");
+  box.addEventListener("click",function(e){
+    var b=e.target.closest(".card");if(!b)return;var it=items[b.dataset.i];
+    document.getElementById("dT").textContent=it.n;
+    document.getElementById("dTab").innerHTML=specs.map(function(s){return'<tr><td>'+s+'</td><td>'+PH+'</td></tr>'}).join("");
+    sel.value=it.c;
+    d.showModal();
+  });
+  document.getElementById("close").onclick=function(){d.close()};
+  d.addEventListener("click",function(e){if(e.target===d)d.close()});
+  document.getElementById("dGo").onclick=function(){d.close()};
+  var ag=document.getElementById("agree"),sd=document.getElementById("send");
+  ag.onchange=function(){sd.disabled=!ag.checked};
+  document.getElementById("f").onsubmit=function(e){
+    e.preventDefault();
+    var f=e.target;if(!f.name.value.trim()||f.phone.value.replace(/\D/g,"").length<10){alert("Укажите имя и телефон");return}
+    document.getElementById("ok").style.display="block";sd.disabled=true;
+  };
+})();
+</script>
+</body>
+</html>
